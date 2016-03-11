@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Website short:</strong>
+  <%= @user.website_url %>
+</p>
+
+<p>
+  <strong>Short url:</strong>
+  <%= @user.short_url %>
+</p>
+
+<p>
+	<%= form_for @user.friendships.new do |f| %>
+		<%= f.hidden_field :friender_id, value: @user.id %>
+		<%= f.select(:friended_id, User.options_for_select_without(@user) ) %>
+		<%= f.submit %>
+	<% end %>
+</p>
+
+<p class="headings" >
+	<h4>Website Headings:</h4>
+	<% @user.headings.each do |heading| %>
+		<p class="heading.type" > <%= heading.content %> </p>
+	<% end %>
+</p>
+
+<p class="friends" >
+	<h4>Friends:</h4>
+	<% @user.friends.each do |friend| %>
+		<p class="friend" > <%= friend.name %> </p>
+	<% end %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
