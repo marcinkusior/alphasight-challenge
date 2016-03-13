@@ -5,5 +5,9 @@ class Heading < ActiveRecord::Base
 	validates :user_id, presence: true
 
 	belongs_to :user
+
+	def self.search(query)
+		Heading.where("content like ?", "%#{query}%")
+	end
 end
 

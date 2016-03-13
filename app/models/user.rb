@@ -35,9 +35,39 @@ class User < ActiveRecord::Base
     self.friends.include?(user)
   end
 
-  def self.options_for_select_without(user)
-    User.where.not(id: user.id).map{|user| [user.name, user.id] }
+  def options_for_friends
+    reject_ids = self.friends.map{|user| user.id } << self.id
+    User.where.not(id: reject_ids).map{|user| [user.name, user.id] }
   end
+
+  def all_paths_between(headings)
+    headings.map do |heading| 
+      if heading.user == self then
+        [ "(#{heading.content})", [self.name]]
+      else
+        result = self.path_of_introduction(heading.user) << heading.user.name
+        [ "(#{heading.content})", result ] 
+        #ex.=> ['Some Topic of Interest', ['Mike', 'Sally', 'David'] ]
+      end
+    end
+  end
+
+  def path_of_introduction(rootuser)
+    return ['friends already with'] if self.friends_with?(rootuser)
+    queue = [[self]]
+    rootfriends = rootuser.friends
+    marked = [self]
+    until queue.empty? do
+      subject = queue.shift
+      return subject.map{|user| user.name } if rootfriends.include?(subject[-1])
+      marked << subject[-1]
+      subject[-1].friends.each do |friend|
+        to_queue = subject + [friend]
+        queue << to_queue unless marked.include?(friend)
+      end
+    end
+    ['no connection with']
+  end 
 
   protected
 
@@ -51,7 +81,7 @@ class User < ActiveRecord::Base
   end
 
   def scrap_headings
-   doc= Nokogiri::HTML(open(self.website_url)) 
+   doc = Nokogiri::HTML(open(self.website_url)) 
    types = ['h1', 'h2', 'h3'] 
    types.each do |type| 
      doc.css(type).each do |heading|  
