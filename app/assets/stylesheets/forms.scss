@@ -1,0 +1,52 @@
+@import 'variables';
+
+.field{
+	float: left;
+}
+
+form{
+	overflow: hidden;	
+}
+
+label{
+  font-weight: 700;
+  color: #767676;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+input{
+	padding: 8px; 
+	font-size: 14px;
+  outline: 0;
+  border: 0;
+  font-weight: 300;
+  margin-right: 9px;
+  font-family: 'Roboto';  
+  color: #0D2943;
+}
+
+[type="submit"], button, select{
+  background: $second-color;
+  color: white;
+  font-family: 'Roboto';
+  padding: 8px 52px;
+  border: 0;
+  font-weight: 700;
+  border-radius: 5px;
+  transition: 0.4s;
+  outline: 0;
+  &:hover{
+  	background: $second-color-hover;
+    cursor: pointer;
+  }
+}
+
+select{
+  background: $main-color;
+  color: black;
+  outline: 0;
+  &:hover{
+    background: $main-color;
+  }
+}

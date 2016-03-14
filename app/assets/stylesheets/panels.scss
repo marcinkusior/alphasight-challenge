@@ -1,0 +1,20 @@
+@import 'variables';
+
+.panel{
+	overflow: hidden;
+	background: $main-color;
+	padding: 10px;
+	margin-bottom: 20px;
+	display: none;
+}
+
+
+.panel.active{display: block;}
+
+#panel-buttons{
+	button{
+		transition: 0s;
+		border-radius: 0;
+	}
+	button.active{background: $main-color;}
+}

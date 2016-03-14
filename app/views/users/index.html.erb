@@ -1,33 +1,41 @@
-<p id="notice"><%= notice %></p>
+<!-- <p id="notice"><%= notice %></p> -->
   
-  <%= render 'users/form' %>
+  
 
-<h1>Listing Users</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Website short</th>
-      <th>Short url</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @users.each do |user| %>
+<header>
+  <div class="container">  
+    <%= render 'users/form' %>
+  </div> <!-- end container -->
+</header>
+<div class="container">
+  <h1>Listing Users</h1>
+   
+  <table>
+    <thead>
       <tr>
-        <td><%= user.name %></td>
-        <td><%= user.website_url %></td>
-        <td><%= user.short_url %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Name</th>
+        <th>Website short</th>
+        <th>Friends</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <hr> 
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%=link_to user.short_url, user.short_url, target: 'blank' %></td>
+          <td><%= user.friends.count %></td>
+          <td><%= link_to 'Show', user %></td>
+          <td><%= link_to 'Edit', edit_user_path(user) %></td>
+          <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<br>
+  <br>
 
-<%= link_to 'New User', new_user_path %>
+  <%= link_to 'New User', new_user_path %>
+
+</div> <!-- end container -->

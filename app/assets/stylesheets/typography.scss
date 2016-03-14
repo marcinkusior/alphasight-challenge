@@ -1,0 +1,19 @@
+body{
+	font-family: 'Roboto';
+}
+
+h1{
+  font-weight: 100;
+  font-size: 49px;
+}
+
+h4{
+	margin: 5px 0;
+}
+a{
+	text-decoration: none;
+  font-weight: 400 ;
+	&:hover{ text-decoration: underline; color: grey !important; }
+	&:link{ color: #06376F; }
+	&:visited{ color: #06376F; }
+}

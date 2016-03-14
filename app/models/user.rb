@@ -1,12 +1,3 @@
-
-
-
-
-
-
-
-
-
 class User < ActiveRecord::Base
 	before_save :create_short_url
   before_save :scrap_headings
@@ -43,23 +34,24 @@ class User < ActiveRecord::Base
   def all_paths_between(headings)
     headings.map do |heading| 
       if heading.user == self then
-        [ "(#{heading.content})", [self.name]]
+        [ "#{heading.content}", [self.name]]
       else
         result = self.path_of_introduction(heading.user) << heading.user.name
-        [ "(#{heading.content})", result ] 
+        [ "#{heading.content}", result ] 
         #ex.=> ['Some Topic of Interest', ['Mike', 'Sally', 'David'] ]
       end
     end
   end
 
-  def path_of_introduction(rootuser)
-    return ['friends already with'] if self.friends_with?(rootuser)
+  def path_of_introduction(targetuser)
+    #breadth-first search to find path from self to target user
+    return ['friends already with'] if self.friends_with?(targetuser)
     queue = [[self]]
-    rootfriends = rootuser.friends
+    targetfriends = targetuser.friends
     marked = [self]
     until queue.empty? do
       subject = queue.shift
-      return subject.map{|user| user.name } if rootfriends.include?(subject[-1])
+      return subject.map{|user| user.name } if targetfriends.include?(subject[-1])
       marked << subject[-1]
       subject[-1].friends.each do |friend|
         to_queue = subject + [friend]
