@@ -71,21 +71,21 @@ RSpec.describe User, type: :model do
       heading = Heading.find(1)
       user3 = User.find(3)
       result = user3.all_paths_between([heading])
-      expect(result).to eq ([['(TestHeading)', ['user3']]])
+      expect(result).to eq ([['TestHeading', ['user3']]])
     end
 
     it 'returns correct result' do
       heading = Heading.find(1)
       user1 = User.find(1)
       result = user1.all_paths_between([heading])
-      expect(result).to eq ([['(TestHeading)', ['user1', 'user2', 'user3']]])
+      expect(result).to eq ([['TestHeading', ['user1', 'user2', 'user3']]])
     end
 
     it 'returns correct in complex scenarios' do
       heading = Heading.find(2)
       user1 = User.find(1)
       result = user1.all_paths_between([heading])
-      expect(result).to eq ([['(ComplexHeading)', ['user1', 'user2', 'user3', 'user4', 'user5']]])
+      expect(result).to eq ([['ComplexHeading', ['user1', 'user2', 'user3', 'user4', 'user5']]])
     end
   end
 end
